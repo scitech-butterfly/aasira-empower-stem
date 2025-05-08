@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 interface SectionHeadingProps {
   title: string;
   subtitle?: ReactNode;
+  description?: string;
   centered?: boolean;
   className?: string;
 }
@@ -11,6 +12,7 @@ interface SectionHeadingProps {
 const SectionHeading = ({ 
   title, 
   subtitle, 
+  description,
   centered = false,
   className = "" 
 }: SectionHeadingProps) => {
@@ -23,6 +25,11 @@ const SectionHeading = ({
       {subtitle && (
         <p className="text-lg text-white/80 mt-4 max-w-3xl mx-auto">
           {subtitle}
+        </p>
+      )}
+      {description && (
+        <p className="text-md text-white/70 mt-2 max-w-3xl mx-auto">
+          {description}
         </p>
       )}
     </div>
