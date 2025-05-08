@@ -75,15 +75,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-start">
                 <MapPin size={18} className="mr-2 text-aasira-accent mt-0.5" />
-                <span className="text-sm">Bangalore, Karnataka, India</span>
+                <span className="text-sm">Noida, Uttar Pradesh, India</span>
               </div>
               <div className="flex items-center">
                 <Phone size={18} className="mr-2 text-aasira-accent" />
-                <span className="text-sm">+91 9876543210</span>
+                <span className="text-sm">+91 9971614166, +91 7011525288</span>
               </div>
               <div className="flex items-center">
                 <Mail size={18} className="mr-2 text-aasira-accent" />
-                <span className="text-sm">contact@aasira.org</span>
+                <span className="text-sm">teamaasira@gmail.com</span>
               </div>
             </div>
           </div>
