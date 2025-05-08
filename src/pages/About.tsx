@@ -3,35 +3,35 @@ import HeroSection from "@/components/HeroSection";
 import SectionHeading from "@/components/SectionHeading";
 import TeamMemberCard from "@/components/TeamMemberCard";
 
-// Sample team data
+// Team data
 const founders = [
   {
-    name: "Dr. Priya Sharma",
-    role: "Co-Founder & Executive Director",
-    bio: "Dr. Sharma is a quantum physicist with over 15 years of experience in academia and industry. She founded Aasira to create pathways for women in STEM fields based on her personal experiences overcoming barriers in her career.",
+    name: "Kashvi Singh",
+    role: "Co-Founder",
+    bio: "Hi! I am an AIML undergraduate who's obsessed with exploring all aspects of any new technology she comes across. Having had a keen inclination towards STEM fields since the early stages, I noticed the gender gap right at the onset of middle school. Over the years as I started observing a bias, I felt a rage I couldn't express.  Aasira is an attempt to extend a hand to the community that faces this every day and work towards inclusiona and diversity in STEM fields.",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://www.linkedin.com/in/kashvi-singh-35a037232/"
   },
   {
-    name: "Anjali Patel",
-    role: "Co-Founder & Program Director",
-    bio: "With a background in computer science and education policy, Anjali designs and implements Aasira's educational programs and partnerships. She is passionate about making STEM education accessible to all.",
+    name: "Samriddhi Bisht",
+    role: "Co-Founder",
+    bio: "Being a undergraduate student, pursuing Computer Science, I have always felt great affection for technology and its applications. I believe that technology assorted with social good is the key to modernisation and development. When I decided to explore Science, later did I realize the major STEM gender gap- despite decades of progress towards equality, women are still underrepresented in the tech workforce, figures speaking for themselves. Having said that, I am of the opinion that women need to be empowered and get themselves equipped with digital skills to shape the future. Through Aasira, we aim to develop a women-centered atmosphere where we rise and learn together. We focus towards providing wings of courage to women as they prepare their flight towards change-making.",
     image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://www.linkedin.com/in/samriddhi-bisht/"
   }
 ];
 
 const coreTeam = [
   {
-    name: "Neha Gupta",
+    name: "Gauri Singh",
     role: "Outreach Coordinator",
     bio: "Neha manages community partnerships and event planning to expand Aasira's impact across India.",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
     linkedin: "https://linkedin.com"
   },
   {
-    name: "Raj Malhotra",
-    role: "Technology Lead",
+    name: "Sarvesh Kumar Yadav",
+    role: "Lead",
     bio: "Raj oversees the development of Aasira's digital platforms and educational technologies.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
     linkedin: "https://linkedin.com"
