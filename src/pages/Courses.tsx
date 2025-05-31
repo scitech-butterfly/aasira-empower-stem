@@ -9,101 +9,14 @@ import { Badge } from "@/components/ui/badge";
 import SectionHeading from "@/components/SectionHeading";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Link } from "react-router-dom";
-
-// Mock courses data
-const mockCourses = [
-  {
-    id: "1",
-    title: "Introduction to Python Programming",
-    description: "A beginner-friendly course covering Python basics, data types, control flows, and simple applications.",
-    level: "Beginner",
-    duration: "6 weeks",
-    price: 4999,
-    instructor: "Anjali Mehta",
-    instructorRole: "Senior Software Engineer",
-    enrollments: 342,
-    rating: 4.8,
-    lessons: 24,
-    coverImage: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    tags: ["programming", "python", "beginner"],
-    isPublished: true,
-    comingSoon: false
-  },
-  {
-    id: "2",
-    title: "Data Analysis with R",
-    description: "Learn to analyze and visualize data using R programming language and popular packages like ggplot2.",
-    level: "Intermediate",
-    duration: "8 weeks",
-    price: 6999,
-    instructor: "Dr. Rahul Kapoor",
-    instructorRole: "Data Scientist",
-    enrollments: 215,
-    rating: 4.7,
-    lessons: 32,
-    coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    tags: ["data-science", "r-programming", "statistics"],
-    isPublished: true,
-    comingSoon: false
-  },
-  {
-    id: "3",
-    title: "Web Development Fundamentals",
-    description: "Master the basics of HTML, CSS, and JavaScript to build responsive and interactive websites.",
-    level: "Beginner",
-    duration: "10 weeks",
-    price: 5499,
-    instructor: "Zara Ahmed",
-    instructorRole: "Frontend Developer",
-    enrollments: 427,
-    rating: 4.9,
-    lessons: 40,
-    coverImage: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    tags: ["web-development", "html", "css", "javascript"],
-    isPublished: true,
-    comingSoon: false
-  },
-  {
-    id: "4",
-    title: "Machine Learning Essentials",
-    description: "An introduction to key machine learning concepts, algorithms, and practical applications.",
-    level: "Advanced",
-    duration: "12 weeks",
-    price: 9999,
-    instructor: "Dr. Priya Singh",
-    instructorRole: "AI Researcher",
-    enrollments: 189,
-    rating: 4.6,
-    lessons: 36,
-    coverImage: "https://images.unsplash.com/photo-1527474305487-b87b222841cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    tags: ["machine-learning", "ai", "data-science"],
-    isPublished: false,
-    comingSoon: true
-  },
-  {
-    id: "5",
-    title: "Mobile App Development with Flutter",
-    description: "Build cross-platform mobile applications for iOS and Android using Google's Flutter framework.",
-    level: "Intermediate",
-    duration: "8 weeks",
-    price: 7499,
-    instructor: "Vikram Reddy",
-    instructorRole: "Mobile Developer",
-    enrollments: 156,
-    rating: 4.7,
-    lessons: 30,
-    coverImage: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    tags: ["mobile-development", "flutter", "dart"],
-    isPublished: false,
-    comingSoon: true
-  }
-];
 
 const fetchCourses = async () => {
   const { data, error } = await supabase
     .from("courses")
-    .select("*")
+    .select(`
+      *,
+      course_enrollments(count)
+    `)
     .eq("is_published", true)
     .order("created_at", { ascending: false });
     
@@ -116,15 +29,10 @@ const CourseCard = ({ course }: { course: any }) => {
     <Card className="glass-card h-full flex flex-col">
       <div className="relative overflow-hidden rounded-t-lg">
         <img 
-          src={course.coverImage} 
+          src={course.cover_image || "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"} 
           alt={course.title} 
           className="w-full h-48 object-cover"
         />
-        {course.comingSoon && (
-          <div className="absolute top-0 right-0 bg-yellow-500 text-white px-3 py-1 text-xs font-semibold">
-            Coming Soon
-          </div>
-        )}
         <Badge className="absolute top-2 left-2">
           {course.level}
         </Badge>
@@ -132,17 +40,6 @@ const CourseCard = ({ course }: { course: any }) => {
       
       <CardHeader className="pb-2">
         <CardTitle className="text-xl text-white">{course.title}</CardTitle>
-        <div className="flex items-center mt-2">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-aasira-secondary text-white">
-              {course.instructor.split(" ").map((n: string) => n[0]).join("")}
-            </AvatarFallback>
-          </Avatar>
-          <div className="ml-2">
-            <p className="text-sm font-medium text-white">{course.instructor}</p>
-            <p className="text-xs text-white/60">{course.instructorRole}</p>
-          </div>
-        </div>
       </CardHeader>
       
       <CardContent className="flex-grow">
@@ -154,12 +51,8 @@ const CourseCard = ({ course }: { course: any }) => {
             <span>{course.duration}</span>
           </div>
           <div className="flex items-center">
-            <BookOpen className="h-4 w-4 mr-1 text-aasira-accent" />
-            <span>{course.lessons} lessons</span>
-          </div>
-          <div className="flex items-center">
             <Users className="h-4 w-4 mr-1 text-aasira-accent" />
-            <span>{course.enrollments} enrolled</span>
+            <span>{course.course_enrollments?.length || 0} enrolled</span>
           </div>
           <div className="flex items-center">
             <BarChart className="h-4 w-4 mr-1 text-aasira-accent" />
@@ -173,15 +66,9 @@ const CourseCard = ({ course }: { course: any }) => {
           ₹{course.price}
         </div>
         
-        {course.comingSoon ? (
-          <Button disabled variant="outline" size="sm">
-            Coming Soon
-          </Button>
-        ) : (
-          <Button variant="default" size="sm" className="bg-aasira-accent hover:bg-aasira-accent/90">
-            Enroll Now
-          </Button>
-        )}
+        <Button variant="default" size="sm" className="bg-aasira-accent hover:bg-aasira-accent/90">
+          Enroll Now
+        </Button>
       </CardFooter>
     </Card>
   );
@@ -191,18 +78,16 @@ const Courses = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
 
-  const { data: courses = mockCourses, isLoading } = useQuery({
+  const { data: courses = [], isLoading } = useQuery({
     queryKey: ["courses"],
-    queryFn: () => Promise.resolve(mockCourses) // For now using mock data
-    // queryFn: fetchCourses // Will use this when we start using real data
+    queryFn: fetchCourses
   });
 
   // Filter courses based on search query and level
-  const filteredCourses = courses.filter(course => {
+  const filteredCourses = courses.filter((course: any) => {
     const matchesSearch = searchQuery === "" || 
       course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.tags.some((tag: string) => tag.includes(searchQuery.toLowerCase()));
+      course.description.toLowerCase().includes(searchQuery.toLowerCase());
     
     const matchesLevel = selectedLevel === null || course.level === selectedLevel;
     
@@ -210,6 +95,14 @@ const Courses = () => {
   });
 
   const levels = ["Beginner", "Intermediate", "Advanced"];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-aasira-primary flex items-center justify-center">
+        <Loader2 className="animate-spin text-aasira-accent" size={32} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-aasira-primary">
@@ -258,7 +151,7 @@ const Courses = () => {
         
         {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map(course => (
+          {filteredCourses.map((course: any) => (
             <CourseCard key={course.id} course={course} />
           ))}
         </div>

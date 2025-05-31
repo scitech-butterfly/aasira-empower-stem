@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { CalendarIcon, MapPin, Search, Filter } from "lucide-react";
+import { CalendarIcon, MapPin, Search, Filter, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -19,98 +19,22 @@ const fetchEvents = async () => {
   return data || [];
 };
 
-// Mock events for now
-const mockEvents = [
-  {
-    id: "1",
-    title: "Women in Tech Conference 2023",
-    description: "Join us for a day of inspiration, learning, and networking with leading women in the technology sector.",
-    date: "June 15, 2023",
-    time: "9:00 AM - 5:00 PM",
-    location: "Bengaluru International Convention Center",
-    image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    type: "offline",
-    rsvpLink: "https://example.com/rsvp",
-    isPast: true
-  },
-  {
-    id: "2",
-    title: "Coding Workshop for Beginners",
-    description: "Learn the basics of programming in this hands-on workshop designed for absolute beginners.",
-    date: "July 8, 2023",
-    time: "2:00 PM - 6:00 PM",
-    location: "Virtual Zoom Session",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    type: "online",
-    rsvpLink: "https://example.com/rsvp",
-    isPast: false
-  },
-  {
-    id: "3",
-    title: "STEM Career Fair",
-    description: "Connect with top employers in STEM fields and explore career opportunities across various industries.",
-    date: "August 20, 2023",
-    time: "10:00 AM - 4:00 PM",
-    location: "Chennai Trade Center",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    type: "offline",
-    rsvpLink: "https://example.com/rsvp",
-    isPast: false
-  },
-  {
-    id: "4",
-    title: "Data Science Fundamentals Webinar",
-    description: "An introduction to data analysis, visualization, and the basics of machine learning for beginners.",
-    date: "September 5, 2023",
-    time: "6:00 PM - 8:00 PM",
-    location: "Online - Microsoft Teams",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    type: "online",
-    rsvpLink: "https://example.com/rsvp",
-    isPast: false
-  },
-  {
-    id: "5",
-    title: "Women in Engineering Panel Discussion",
-    description: "Hear from accomplished women engineers about their journeys, challenges, and advice for aspiring engineers.",
-    date: "October 12, 2023",
-    time: "5:00 PM - 7:30 PM",
-    location: "Delhi Technology Hub",
-    image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    type: "offline",
-    rsvpLink: "https://example.com/rsvp",
-    isPast: false
-  },
-  {
-    id: "6",
-    title: "Hackathon: Tech for Social Good",
-    description: "A 48-hour hackathon to develop innovative solutions for pressing social and environmental challenges.",
-    date: "November 18-20, 2023",
-    time: "Starts at 9:00 AM",
-    location: "Mumbai Innovation Center",
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    type: "offline",
-    rsvpLink: "https://example.com/rsvp",
-    isPast: false
-  }
-];
-
 const Events = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [eventType, setEventType] = useState<"all" | "online" | "offline">("all");
   const [showPastEvents, setShowPastEvents] = useState(false);
 
-  const { data: events = mockEvents, isLoading } = useQuery({
+  const { data: events = [], isLoading } = useQuery({
     queryKey: ["events"],
-    queryFn: () => Promise.resolve(mockEvents) // For now using mock data
-    // queryFn: fetchEvents // Will use this when we start using real data
+    queryFn: fetchEvents
   });
 
   // Get current date for filtering past events
   const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
   
   // Filter events based on search query, event type, and whether to show past events
-  const filteredEvents = events.filter(event => {
+  const filteredEvents = events.filter((event: any) => {
     // Filter by search query
     const matchesSearch = searchQuery === "" || 
       event.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -121,10 +45,20 @@ const Events = () => {
     const matchesType = eventType === "all" || event.type === eventType;
     
     // Filter by past/upcoming
-    const matchesPastFilter = showPastEvents || !event.isPast;
+    const eventDate = new Date(event.date);
+    const isPast = eventDate < currentDate;
+    const matchesPastFilter = showPastEvents || !isPast;
     
     return matchesSearch && matchesType && matchesPastFilter;
   });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-aasira-primary flex items-center justify-center">
+        <Loader2 className="animate-spin text-aasira-accent" size={32} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-aasira-primary">
@@ -191,21 +125,26 @@ const Events = () => {
         
         {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredEvents.map(event => (
-            <EventCard
-              key={event.id}
-              id={event.id}
-              title={event.title}
-              description={event.description}
-              date={event.date}
-              time={event.time}
-              location={event.location}
-              image={event.image}
-              type={event.type as "online" | "offline"}
-              rsvpLink={event.rsvpLink}
-              isPast={event.isPast}
-            />
-          ))}
+          {filteredEvents.map((event: any) => {
+            const eventDate = new Date(event.date);
+            const isPast = eventDate < currentDate;
+            
+            return (
+              <EventCard
+                key={event.id}
+                id={event.id}
+                title={event.title}
+                description={event.description}
+                date={eventDate.toLocaleDateString()}
+                time={event.time}
+                location={event.location}
+                image={event.image || "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"}
+                type={event.type as "online" | "offline"}
+                rsvpLink={event.rsvp_link || "#"}
+                isPast={isPast}
+              />
+            );
+          })}
         </div>
         
         {filteredEvents.length === 0 && (

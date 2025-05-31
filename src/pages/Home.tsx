@@ -7,71 +7,39 @@ import ImpactMetrics from "@/components/ImpactMetrics";
 import TestimonialCard from "@/components/TestimonialCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
-// Sample data
-const featuredBlogs = [
-  {
-    id: "1",
-    title: "Breaking Barriers: Women in Quantum Computing",
-    excerpt: "Exploring the groundbreaking work of women pioneers in the field of quantum computing and their impact on the future of technology.",
-    coverImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-    author: "Dr. Priya Sharma",
-    date: "May 2, 2025",
-    category: "Technology",
-    likes: 45,
-    comments: 12,
-    tags: ["quantum", "women-in-tech", "computing"]
-  },
-  {
-    id: "2",
-    title: "The Path to Inclusion: Strategies for Diverse STEM Workplaces",
-    excerpt: "Practical approaches to creating more inclusive STEM environments that welcome and nurture talent from all backgrounds.",
-    coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    author: "Anjali Patel",
-    date: "Apr 28, 2025",
-    category: "Diversity",
-    likes: 32,
-    comments: 8,
-    tags: ["diversity", "inclusion", "workplace"]
-  },
-  {
-    id: "3",
-    title: "Mentorship Matters: Building Support Networks for STEM Students",
-    excerpt: "How effective mentorship programs are changing the game for underrepresented students pursuing STEM education and careers.",
-    coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-    author: "Neha Gupta",
-    date: "Apr 20, 2025",
-    category: "Education",
-    likes: 28,
-    comments: 6,
-    tags: ["mentorship", "education", "support"]
-  }
-];
+const fetchFeaturedBlogs = async () => {
+  const { data, error } = await supabase
+    .from("blogs")
+    .select(`
+      *,
+      blog_categories(name),
+      profiles(full_name),
+      blog_posts_tags(blog_tags(name, slug)),
+      blog_likes(count),
+      blog_comments(count)
+    `)
+    .eq("published", true)
+    .order("created_at", { ascending: false })
+    .limit(3);
+  
+  if (error) throw error;
+  return data || [];
+};
 
-const upcomingEvents = [
-  {
-    id: "1",
-    title: "Women in Data Science Conference",
-    description: "Join us for a day of inspiring talks, workshops, and networking opportunities with women leaders in data science.",
-    date: "June 15, 2025",
-    time: "9:00 AM - 5:00 PM",
-    location: "Virtual Event",
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    type: "online" as const,
-    rsvpLink: "#"
-  },
-  {
-    id: "2",
-    title: "STEM Career Workshop for College Students",
-    description: "Explore career paths in STEM fields and learn from professionals about job opportunities and skill requirements.",
-    date: "June 22, 2025",
-    time: "10:00 AM - 2:00 PM",
-    location: "Bangalore Tech Hub",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
-    type: "offline" as const,
-    rsvpLink: "#"
-  }
-];
+const fetchUpcomingEvents = async () => {
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .gte("date", new Date().toISOString().split('T')[0])
+    .order("date", { ascending: true })
+    .limit(2);
+    
+  if (error) throw error;
+  return data || [];
+};
 
 const testimonials = [
   {
@@ -95,6 +63,16 @@ const testimonials = [
 ];
 
 const Home = () => {
+  const { data: featuredBlogs = [] } = useQuery({
+    queryKey: ["featuredBlogs"],
+    queryFn: fetchFeaturedBlogs
+  });
+
+  const { data: upcomingEvents = [] } = useQuery({
+    queryKey: ["upcomingEvents"],
+    queryFn: fetchUpcomingEvents
+  });
+
   return (
     <div>
       {/* Hero Section */}
@@ -174,8 +152,20 @@ const Home = () => {
           />
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredBlogs.map((blog) => (
-              <BlogCard key={blog.id} {...blog} />
+            {featuredBlogs.map((blog: any) => (
+              <BlogCard 
+                key={blog.id}
+                id={blog.id}
+                title={blog.title}
+                excerpt={blog.content.substring(0, 150) + "..."}
+                coverImage={blog.cover_image || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"}
+                author={blog.profiles?.full_name || "Anonymous"}
+                date={new Date(blog.created_at).toLocaleDateString()}
+                category={blog.blog_categories?.name || "General"}
+                likes={blog.blog_likes?.length || 0}
+                comments={blog.blog_comments?.length || 0}
+                tags={blog.blog_posts_tags?.map((pt: any) => pt.blog_tags?.slug).filter(Boolean) || []}
+              />
             ))}
           </div>
           
@@ -197,8 +187,19 @@ const Home = () => {
           />
           
           <div className="grid md:grid-cols-2 gap-6">
-            {upcomingEvents.map((event) => (
-              <EventCard key={event.id} {...event} />
+            {upcomingEvents.map((event: any) => (
+              <EventCard 
+                key={event.id}
+                id={event.id}
+                title={event.title}
+                description={event.description}
+                date={new Date(event.date).toLocaleDateString()}
+                time={event.time}
+                location={event.location}
+                image={event.image || "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"}
+                type={event.type as "online" | "offline"}
+                rsvpLink={event.rsvp_link || "#"}
+              />
             ))}
           </div>
           
