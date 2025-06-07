@@ -127,13 +127,10 @@ const About = () => {
           
           <div className="max-w-4xl mx-auto glass-card">
             <p className="text-white/80 mb-4">
-              Aasira was born from the personal experiences of our founders, Dr. Priya Sharma and Anjali Patel, who navigated the challenges of being women in male-dominated STEM fields. Despite their success, they recognized the systemic barriers that prevented many talented women from pursuing or advancing in STEM careers.
+              Aasira is a movement dedicated to cementing a better future for all genders in STEM fields. Founded in 2023, we fight for equal recognition of women everywhere- from schools to workplaces. We strive to hold our leaders accountable and to educate and empower others to take action.
             </p>
             <p className="text-white/80 mb-4">
-              In 2020, they joined forces to create an organization that would address these barriers through a comprehensive approach: providing educational resources, building supportive communities, offering mentorship, and advocating for systemic change.
-            </p>
-            <p className="text-white/80">
-              Starting with a small cohort of 20 women from universities across Bangalore, Aasira has grown to impact hundreds of women and other underrepresented individuals in STEM fields across India. What began as a grassroots mentorship program has evolved into a multifaceted initiative that partners with universities, corporations, and government agencies to create lasting change in the STEM ecosystem.
+              As much as it is a people empowerment movement, it is equally an education movement. We work to ensure that our voices are heard for generations to come. But we can’t do it without your help. Get in touch to see how you can get involved and increase our impact.
             </p>
           </div>
         </div>
