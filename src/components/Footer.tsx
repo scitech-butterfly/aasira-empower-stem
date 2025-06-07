@@ -9,9 +9,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div>
-            <div className="flex items-center mb-4">
-              <div className="h-10 w-10 rounded-full bg-aasira-accent flex items-center justify-center">
-                <span className="text-white font-bold text-xl">A</span>
+              <div className="flex items-center mb-4">
+                <div className="h-16 w-16 rounded-full flex items-center justify-center overflow-hidden">
+                  <img
+                    src="https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287755/Artboard_9_aiuqfa.png"
+                    alt="Aasira Logo"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </div>
               <span className="ml-2 font-bold text-xl text-white">Aasira</span>
             </div>
