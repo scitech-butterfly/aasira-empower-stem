@@ -9,14 +9,14 @@ const founders = [
     name: "Kashvi Singh",
     role: "Co-Founder",
     bio: "Hi! I am an AIML undergraduate who's obsessed with exploring all aspects of any new technology she comes across. Having had a keen inclination towards STEM fields since the early stages, I noticed the gender gap right at the onset of middle school. Over the years as I started observing a bias, I felt a rage I couldn't express.  Aasira is an attempt to extend a hand to the community that faces this every day and work towards inclusiona and diversity in STEM fields.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
-    linkedin: "https://www.linkedin.com/in/kashvi-singh-35a037232/"
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287264/Kashvi_Singh_kn0m7x.png",
+    linkedin: "https://www.linkedin.com/in/kashviisingh/"
   },
   {
     name: "Samriddhi Bisht",
     role: "Co-Founder",
     bio: "Being a undergraduate student, pursuing Computer Science, I have always felt great affection for technology and its applications. I believe that technology assorted with social good is the key to modernisation and development. When I decided to explore Science, later did I realize the major STEM gender gap- despite decades of progress towards equality, women are still underrepresented in the tech workforce, figures speaking for themselves. Having said that, I am of the opinion that women need to be empowered and get themselves equipped with digital skills to shape the future. Through Aasira, we aim to develop a women-centered atmosphere where we rise and learn together. We focus towards providing wings of courage to women as they prepare their flight towards change-making.",
-    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749286846/Samriddhi_1_pz567s.jpg",
     linkedin: "https://www.linkedin.com/in/samriddhi-bisht/"
   }
 ];
@@ -24,17 +24,17 @@ const founders = [
 const coreTeam = [
   {
     name: "Gauri Singh",
-    role: "Outreach Coordinator",
-    bio: "Neha manages community partnerships and event planning to expand Aasira's impact across India.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
-    linkedin: "https://linkedin.com"
+    role: "Educational Outreach Training Lead",
+    bio: "Gauri manages community partnerships and event planning to expand Aasira's impact across India.",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287033/IMG_6463_obt9z2.heic",
+    linkedin: "https://www.linkedin.com/in/gauri-singh-754787285/"
   },
   {
-    name: "Sarvesh Kumar Yadav",
-    role: "Lead",
-    bio: "Raj oversees the development of Aasira's digital platforms and educational technologies.",
+    name: "Khushi Kashyap",
+    role: "Educational Outreach Trainer",
+    bio: "Khushi conducts technical training classes for Aasira's collaborations.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://www.linkedin.com/in/khushikashyap8605/"
   },
   {
     name: "Deepa Krishnan",
