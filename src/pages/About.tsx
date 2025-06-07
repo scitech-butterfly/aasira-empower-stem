@@ -26,14 +26,14 @@ const coreTeam = [
     name: "Gauri Singh",
     role: "Educational Outreach Training Lead",
     bio: "Gauri manages community partnerships and event planning to expand Aasira's impact across India.",
-    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287033/IMG_6463_obt9z2.heic",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287789/IMG_6463_ip8jbh.jpg",
     linkedin: "https://www.linkedin.com/in/gauri-singh-754787285/"
   },
   {
     name: "Khushi Kashyap",
     role: "Educational Outreach Trainer",
     bio: "Khushi conducts technical training classes for Aasira's collaborations.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287649/IMG-20250412-WA0199_sm6qzu.jpg",
     linkedin: "https://www.linkedin.com/in/khushikashyap8605/"
   },
   {
