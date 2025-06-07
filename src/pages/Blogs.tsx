@@ -25,15 +25,14 @@ const fetchBlogs = async () => {
     .from("blogs")
     .select(`
       *,
-      blog_categories(name),
-      profiles(full_name),
-      blog_posts_tags(blog_tags(name, slug)),
+      blog_categories:category_id(name),
+      profiles:author_id(full_name),
       blog_likes(count),
       blog_comments(count)
     `)
     .eq("published", true)
     .order("created_at", { ascending: false });
-  
+
   if (error) throw error;
   return data;
 };
