@@ -22,7 +22,7 @@ const fetchEvents = async () => {
 const Events = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [eventType, setEventType] = useState<"all" | "online" | "offline">("all");
-  const [showPastEvents, setShowPastEvents] = useState(false);
+  const [showPastEvents, setShowPastEvents] = useState(true);
 
   const { data: events = [], isLoading } = useQuery({
     queryKey: ["events"],
