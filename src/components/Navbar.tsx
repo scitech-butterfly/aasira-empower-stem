@@ -67,12 +67,15 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="h-10 w-10 rounded-full bg-aasira-accent flex items-center justify-center">
-              <span className="text-white font-bold text-xl">A</span>
+            <div className="h-10 w-10 rounded-full bg-aasira-accent flex items-center justify-center overflow-hidden">
+              <img
+                src="https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287755/Artboard_9_aiuqfa.png"
+                alt="Aasira Logo"
+                className="h-full w-full object-cover"
+              />
             </div>
-            <span className="ml-2 font-bold text-xl md:text-2xl text-white">Aasira</span>
           </Link>
-
+          
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
