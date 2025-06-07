@@ -67,7 +67,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="h-10 w-10 rounded-full flex items-center justify-center overflow-hidden">
+            <div className="h-16 w-16 rounded-full flex items-center justify-center overflow-hidden">
               <img
                 src="https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287755/Artboard_9_aiuqfa.png"
                 alt="Aasira Logo"
