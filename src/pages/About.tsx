@@ -179,20 +179,50 @@ const About = () => {
         <div className="container mx-auto px-4">
           <SectionHeading 
             title="Our Partners" 
-            subtitle="Organizations that support our mission to empower women in STEM"
+            subtitle="Organizations that support our mission to promote diversity in STEM"
             centered
           />
-          
+      
           <div className="flex flex-wrap justify-center items-center gap-8">
-            {/* Partner logos would go here - using placeholders */}
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <div key={item} className="w-32 h-20 bg-white/10 rounded flex items-center justify-center">
-                <div className="text-white/50 font-bold">Partner {item}</div>
-              </div>
+            {[
+              {
+                name: "GoodWorks Trust",
+                logo: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750690720/goodworks_aih6pr.jpg"
+              },
+              {
+                name: "Chhanv Foundation",
+                logo: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750690557/chhanv_vstgyr.png"
+              },
+              {
+                name: "Care NGO",
+                logo: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750690630/carengo_h25h3l.jpg"
+              },
+              {
+                name: "Kalaragini Trust",
+                logo: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750690514/kalaraginitrust_btswtb.jpg"
+              },
+              {
+                name: "Kendriya Vidyalaya",
+                logo: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750690682/kv_mmdh3u.jpg"
+              }
+            ].map((partner, index) => (
+              <a
+                key={index}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-32 h-20 bg-white/10 rounded flex items-center justify-center hover:bg-white/20 transition"
+              >
+                <img 
+                  src={partner.logo} 
+                  alt={partner.name} 
+                  className="max-h-16 max-w-full object-contain"
+                />
+              </a>
             ))}
           </div>
         </div>
       </section>
+
     </div>
   );
 };
