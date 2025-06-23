@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,6 +20,7 @@ const fetchBlogTags = async () => {
 };
 
 const fetchBlogs = async () => {
+  console.log("🔍 Fetching blogs...");
   const { data, error } = await supabase
     .from("blogs")
     .select(`
@@ -31,7 +31,13 @@ const fetchBlogs = async () => {
     .eq("published", true)
     .order("created_at", { ascending: false });
 
-  if (error) throw error;
+  console.log("📊 Raw blogs data:", data);
+  console.log("❌ Blogs error:", error);
+  
+  if (error) {
+    console.error("Error fetching blogs:", error);
+    throw error;
+  }
   return data;
 };
 
@@ -71,30 +77,47 @@ const Blogs = () => {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data: categories = [], isLoading: isCategoriesLoading } = useQuery({
+  const { data: categories = [], isLoading: isCategoriesLoading, error: categoriesError } = useQuery({
     queryKey: ["blogCategories"],
     queryFn: fetchBlogCategories
   });
 
-  const { data: tags = [], isLoading: isTagsLoading } = useQuery({
+  const { data: tags = [], isLoading: isTagsLoading, error: tagsError } = useQuery({
     queryKey: ["blogTags"],
     queryFn: fetchBlogTags
   });
 
-  const { data: blogs = [], isLoading: isBlogsLoading } = useQuery({
+  const { data: blogs = [], isLoading: isBlogsLoading, error: blogsError } = useQuery({
     queryKey: ["blogs"],
     queryFn: fetchBlogs
   });
 
-  const { data: blogPostsTags = [] } = useQuery({
+  const { data: blogPostsTags = [], error: blogPostsTagsError } = useQuery({
     queryKey: ["blogPostsTags"],
     queryFn: fetchBlogPostsTags
   });
 
-  const { data: blogStats } = useQuery({
+  const { data: blogStats, error: blogStatsError } = useQuery({
     queryKey: ["blogStats"],
     queryFn: fetchBlogStats
   });
+
+  // Debug logging
+  useEffect(() => {
+    console.log("🐛 Debug Info:");
+    console.log("- Categories:", categories);
+    console.log("- Tags:", tags);
+    console.log("- Blogs:", blogs);
+    console.log("- Blog Posts Tags:", blogPostsTags);
+    console.log("- Blog Stats:", blogStats);
+    console.log("- Errors:", {
+      categoriesError,
+      tagsError,
+      blogsError,
+      blogPostsTagsError,
+      blogStatsError
+    });
+  }, [categories, tags, blogs, blogPostsTags, blogStats, categoriesError, tagsError, blogsError, blogPostsTagsError, blogStatsError]);
 
   // Create a map of blog IDs to their tags
   const blogTagsMap = blogPostsTags.reduce((acc: Record<string, any[]>, item) => {
@@ -119,10 +142,30 @@ const Blogs = () => {
     return matchesCategory && matchesTag && matchesSearch;
   });
 
+  console.log("🔍 Filtered blogs:", filteredBlogs);
+
+  // Show error states
+  if (blogsError) {
+    return (
+      <div className="min-h-screen bg-aasira-primary flex items-center justify-center">
+        <div className="text-center text-white">
+          <h2 className="text-xl font-bold mb-2">Error Loading Blogs</h2>
+          <p className="text-red-400">{blogsError.message}</p>
+          <pre className="mt-4 p-4 bg-black/20 rounded text-left text-sm overflow-auto">
+            {JSON.stringify(blogsError, null, 2)}
+          </pre>
+        </div>
+      </div>
+    );
+  }
+
   if (isBlogsLoading) {
     return (
       <div className="min-h-screen bg-aasira-primary flex items-center justify-center">
-        <Loader2 className="animate-spin text-aasira-accent" size={32} />
+        <div className="text-center text-white">
+          <Loader2 className="animate-spin text-aasira-accent mx-auto mb-4" size={32} />
+          <p>Loading blogs...</p>
+        </div>
       </div>
     );
   }
@@ -136,6 +179,24 @@ const Blogs = () => {
           description="Explore articles on STEM education, career development, diversity, and innovation."
           centered={true}
         />
+
+        {/* Debug Info Panel - Remove this in production */}
+        <div className="mb-8 p-4 bg-black/20 rounded text-white text-sm">
+          <h4 className="font-bold mb-2">Debug Info:</h4>
+          <p>Total blogs fetched: {blogs.length}</p>
+          <p>Filtered blogs: {filteredBlogs.length}</p>
+          <p>Selected category: {selectedCategory || "None"}</p>
+          <p>Selected tag: {selectedTag || "None"}</p>
+          <p>Search query: "{searchQuery}"</p>
+          {blogs.length > 0 && (
+            <details className="mt-2">
+              <summary className="cursor-pointer">View first blog data</summary>
+              <pre className="mt-2 text-xs overflow-auto">
+                {JSON.stringify(blogs[0], null, 2)}
+              </pre>
+            </details>
+          )}
+        </div>
 
         {/* Search and Filter */}
         <div className="mb-8 mt-10 flex flex-col md:flex-row gap-4">
@@ -220,10 +281,17 @@ const Blogs = () => {
           ))}
         </div>
 
-        {filteredBlogs.length === 0 && (
+        {filteredBlogs.length === 0 && blogs.length > 0 && (
+          <div className="text-center py-16">
+            <h3 className="text-xl font-medium text-white">No blogs match your filters</h3>
+            <p className="text-white/60 mt-2">Try adjusting your search or filters</p>
+          </div>
+        )}
+
+        {blogs.length === 0 && (
           <div className="text-center py-16">
             <h3 className="text-xl font-medium text-white">No blogs found</h3>
-            <p className="text-white/60 mt-2">Try adjusting your search or filters</p>
+            <p className="text-white/60 mt-2">No published blogs are available</p>
           </div>
         )}
       </div>
