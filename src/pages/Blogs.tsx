@@ -25,8 +25,8 @@ const fetchBlogs = async () => {
     .from("blogs")
     .select(`
       *,
-      blog_categories!category_id(name),
-      profiles!author_id(full_name)
+      blog_categories!blogs_category_id_fkey(name),
+      profiles!fk_blogs_author(full_name)
     `)
     .eq("published", true)
     .order("created_at", { ascending: false });
