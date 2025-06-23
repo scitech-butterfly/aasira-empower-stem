@@ -68,6 +68,9 @@ const Footer = () => {
                 <Link to="/courses" className="text-sm hover:text-aasira-accent transition-colors">Courses</Link>
               </li>
               <li>
+                <Link to="/gallery" className="text-sm hover:text-aasira-accent transition-colors">Gallery</Link>
+              </li>
+              <li>
                 <Link to="/contact" className="text-sm hover:text-aasira-accent transition-colors">Contact Us</Link>
               </li>
             </ul>
