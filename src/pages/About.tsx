@@ -25,30 +25,38 @@ const coreTeam = [
   {
     name: "Gauri Singh",
     role: "Educational Outreach Training Lead",
-    bio: "Gauri manages community partnerships and event planning to expand Aasira's impact across India.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287789/IMG_6463_ip8jbh.jpg",
     linkedin: "https://www.linkedin.com/in/gauri-singh-754787285/"
   },
   {
     name: "Khushi Kashyap",
     role: "Educational Outreach Trainer",
-    bio: "Khushi conducts technical training classes for Aasira's collaborations.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287649/IMG-20250412-WA0199_sm6qzu.jpg",
     linkedin: "https://www.linkedin.com/in/khushikashyap8605/"
   },
   {
-    name: "Deepa Krishnan",
-    role: "Research Director",
-    bio: "Deepa leads research initiatives to identify barriers and develop evidence-based solutions for women in STEM.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+    name: "Manjari Pandey",
+    role: "Content Strategist",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750691782/manjari_iuulyt.jpg",
     linkedin: "https://linkedin.com"
   },
   {
-    name: "Sanjay Mehta",
-    role: "Corporate Partnership Manager",
-    bio: "Sanjay builds strategic relationships with industry partners to create opportunities for women in STEM careers.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
-    linkedin: "https://linkedin.com"
+    name: "Tamanna Atreya",
+    role: "Content Strategist",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750691774/tamanna_wxqgox.jpg",
+    linkedin: "https://www.linkedin.com/in/tamanna-mamlakatoi-atreya-390751277/"
+  },
+  {
+    name: "Manya Bhargava",
+    role: "Educational Trainer and Content Creator",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750692242/manya_pnjiwi.jpg",
+    linkedin: "https://www.linkedin.com/in/ananya-poundrik-95b40a2aa/"
+  },
+  {
+    name: "Ananya Poundrik",
+    role: "Educational Trainer and Content Creator",
+    image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750691774/ananya_cnzvqw.jpg",
+    linkedin: "https://www.linkedin.com/in/manya-bhargava-692407280/"
   }
 ];
 
