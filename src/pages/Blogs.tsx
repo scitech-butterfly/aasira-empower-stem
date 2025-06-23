@@ -25,16 +25,45 @@ const fetchBlogs = async () => {
     .from("blogs")
     .select(`
       *,
-      blog_categories:category_id(name),
-      profiles:author_id(full_name),
-      blog_likes(count),
-      blog_comments(count)
+      blog_categories!category_id(name),
+      profiles!author_id(full_name)
     `)
     .eq("published", true)
     .order("created_at", { ascending: false });
 
   if (error) throw error;
   return data;
+};
+
+const fetchBlogPostsTags = async () => {
+  const { data, error } = await supabase
+    .from("blog_posts_tags")
+    .select(`
+      blog_id,
+      blog_tags!tag_id(name, slug)
+    `);
+  
+  if (error) throw error;
+  return data;
+};
+
+const fetchBlogStats = async () => {
+  const [likesData, commentsData] = await Promise.all([
+    supabase.from("blog_likes").select("blog_id"),
+    supabase.from("blog_comments").select("blog_id")
+  ]);
+
+  const likesCount = likesData.data?.reduce((acc: Record<string, number>, like) => {
+    acc[like.blog_id] = (acc[like.blog_id] || 0) + 1;
+    return acc;
+  }, {}) || {};
+
+  const commentsCount = commentsData.data?.reduce((acc: Record<string, number>, comment) => {
+    acc[comment.blog_id] = (acc[comment.blog_id] || 0) + 1;
+    return acc;
+  }, {}) || {};
+
+  return { likesCount, commentsCount };
 };
 
 const Blogs = () => {
@@ -57,10 +86,31 @@ const Blogs = () => {
     queryFn: fetchBlogs
   });
 
+  const { data: blogPostsTags = [] } = useQuery({
+    queryKey: ["blogPostsTags"],
+    queryFn: fetchBlogPostsTags
+  });
+
+  const { data: blogStats } = useQuery({
+    queryKey: ["blogStats"],
+    queryFn: fetchBlogStats
+  });
+
+  // Create a map of blog IDs to their tags
+  const blogTagsMap = blogPostsTags.reduce((acc: Record<string, any[]>, item) => {
+    if (!acc[item.blog_id]) {
+      acc[item.blog_id] = [];
+    }
+    if (item.blog_tags) {
+      acc[item.blog_id].push(item.blog_tags);
+    }
+    return acc;
+  }, {});
+
   // Filter blogs based on selected category, tag, and search query
   const filteredBlogs = blogs.filter((blog: any) => {
     const matchesCategory = !selectedCategory || blog.blog_categories?.name === selectedCategory;
-    const matchesTag = !selectedTag || blog.blog_posts_tags?.some((pt: any) => pt.blog_tags?.slug === selectedTag);
+    const matchesTag = !selectedTag || blogTagsMap[blog.id]?.some((tag: any) => tag.slug === selectedTag);
     const matchesSearch = !searchQuery || 
       blog.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
       blog.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -163,9 +213,9 @@ const Blogs = () => {
               author={blog.profiles?.full_name || "Anonymous"}
               date={new Date(blog.created_at).toLocaleDateString()}
               category={blog.blog_categories?.name || "General"}
-              likes={blog.blog_likes?.length || 0}
-              comments={blog.blog_comments?.length || 0}
-              tags={blog.blog_posts_tags?.map((pt: any) => pt.blog_tags?.slug).filter(Boolean) || []}
+              likes={blogStats?.likesCount[blog.id] || 0}
+              comments={blogStats?.commentsCount[blog.id] || 0}
+              tags={blogTagsMap[blog.id]?.map((tag: any) => tag.slug) || []}
             />
           ))}
         </div>

@@ -15,11 +15,8 @@ const fetchFeaturedBlogs = async () => {
     .from("blogs")
     .select(`
       *,
-      blog_categories(name),
-      profiles(full_name),
-      blog_posts_tags(blog_tags(name, slug)),
-      blog_likes(count),
-      blog_comments(count)
+      blog_categories!category_id(name),
+      profiles!author_id(full_name)
     `)
     .eq("published", true)
     .order("created_at", { ascending: false })
@@ -77,7 +74,19 @@ const Home = () => {
     <div>
       {/* Hero Section */}
       <HeroSection
-        title={<>Empowering <span className="gradient-text">Women in STEM</span><br />Breaking Barriers, Building Futures</>}
+        title={
+          <div className="space-y-4">
+            <div className="text-5xl md:text-6xl lg:text-7xl font-bold gradient-text">
+              Debugging Tech's Diversity Problem
+            </div>
+            <div className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white">
+              Empowering Women in STEM
+            </div>
+            <div className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white">
+              Breaking Barriers, Building Futures
+            </div>
+          </div>
+        }
         subtitle="Aasira is an Indian initiative dedicated to supporting underrepresented individuals in STEM fields through education, community, and outreach programs."
         ctaText="Explore Our Programs"
         ctaLink="/about"
@@ -162,9 +171,9 @@ const Home = () => {
                 author={blog.profiles?.full_name || "Anonymous"}
                 date={new Date(blog.created_at).toLocaleDateString()}
                 category={blog.blog_categories?.name || "General"}
-                likes={blog.blog_likes?.length || 0}
-                comments={blog.blog_comments?.length || 0}
-                tags={blog.blog_posts_tags?.map((pt: any) => pt.blog_tags?.slug).filter(Boolean) || []}
+                likes={0}
+                comments={0}
+                tags={[]}
               />
             ))}
           </div>

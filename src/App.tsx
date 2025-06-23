@@ -12,6 +12,7 @@ import About from "./pages/About";
 import Blogs from "./pages/Blogs";
 import Events from "./pages/Events";
 import Courses from "./pages/Courses";
+import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -35,6 +36,7 @@ const App = () => {
                   <Route path="/blogs" element={<Blogs />} />
                   <Route path="/events" element={<Events />} />
                   <Route path="/courses" element={<Courses />} />
+                  <Route path="/gallery" element={<Gallery />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="*" element={<NotFound />} />
