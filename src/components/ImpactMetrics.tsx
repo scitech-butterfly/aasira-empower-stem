@@ -1,24 +1,19 @@
 
 const metrics = [
   {
-    number: "500+",
-    label: "Women Empowered",
+    number: "100+",
+    label: "Students Empowered",
     description: "Through mentorship and educational programs"
   },
   {
-    number: "50+",
+    number: "10+",
     label: "Events Organized",
     description: "Including workshops, seminars, and networking sessions"
   },
   {
-    number: "25+",
+    number: "5",
     label: "Corporate Partners",
     description: "Supporting our mission and initiatives"
-  },
-  {
-    number: "10+",
-    label: "Universities",
-    description: "Collaborating on STEM education initiatives"
   }
 ];
 
