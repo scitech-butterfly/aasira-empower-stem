@@ -40,22 +40,19 @@ const fetchUpcomingEvents = async () => {
 
 const testimonials = [
   {
-    content: "Aasira's mentorship program completely transformed my career path. The guidance I received helped me overcome barriers and pursue my passion in biotechnology with confidence.",
-    name: "Sneha Reddy",
-    title: "Biotech Researcher",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
+    content: "मुझे कंप्यूटर का समर कैंप करके बहुत अच्छा लगा और कई ऐसी चीज़े जानी जो मुझे पता ही नहीं थी|",
+    name: "Chandni",
+    title: "Student at GoodWorks Trust"
   },
   {
-    content: "The community and support I found through Aasira has been invaluable. Their workshops gave me the technical skills and network I needed to succeed in a male-dominated industry.",
-    name: "Meera Singh",
-    title: "Software Engineer",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
+    content: "कंप्यूटर चलाने में मुझे बहुत मज़ा आने  लगा है | जो भी पढ़ाया जाता है वे विषय मुझे अच्छे से समझ आ जाते हैं | जब हमारी परीक्षा ली गई मेरे बहुत अच्छे अंक आए और मुझे बहुत खुशी हुई |",
+    name: "Nishu",
+    title: "Student at GoodWorks Trust"
   },
   {
-    content: "As someone from a rural background, I never thought a career in technology was possible for me. Aasira's educational resources and encouragement changed everything.",
-    name: "Lakshmi Devi",
-    title: "Data Scientist",
-    avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
+    content: "A great initiative by the team to reform the lives of the kids. Congratulations for the effort to bring the change in the society. We really appreciate you for doing  selfless service of imparting computer and AI classes to the children of GoodWorks Trust. Keep doing GoodWorks."
+    name: "Ms. Smriti Mishra",
+    title: "Co-Founder, GoodWorks Trust"
   }
 ];
 
