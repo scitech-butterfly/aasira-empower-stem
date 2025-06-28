@@ -2,7 +2,6 @@
 import { useState } from "react";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 
 // Sample gallery data - you can replace these with your actual collaboration photos
@@ -38,15 +37,8 @@ const galleryImages = [
   // Add more images as needed
 ];
 
-const categories = ["All", "Workshops", "Mentorship", "Events", "Education"];
-
 const Gallery = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
-
-  const filteredImages = selectedCategory === "All" 
-    ? galleryImages 
-    : galleryImages.filter(img => img.category === selectedCategory);
 
   return (
     <div className="min-h-screen bg-aasira-primary">
@@ -58,23 +50,9 @@ const Gallery = () => {
           centered={true}
         />
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map((category) => (
-            <Badge
-              key={category}
-              variant={selectedCategory === category ? "secondary" : "outline"}
-              className="cursor-pointer px-4 py-2 text-sm"
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </Badge>
-          ))}
-        </div>
-
         {/* Gallery Grid */}
         <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {filteredImages.map((image) => (
+          {galleryImages.map((image) => (
             <div
               key={image.id}
               className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:border-aasira-accent/50 transition-all duration-300"
@@ -89,21 +67,11 @@ const Gallery = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3 className="text-white font-medium text-sm mb-1">{image.title}</h3>
-                  <Badge variant="secondary" className="text-xs">
-                    {image.category}
-                  </Badge>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-        {filteredImages.length === 0 && (
-          <div className="text-center py-16">
-            <h3 className="text-xl font-medium text-white">No images found</h3>
-            <p className="text-white/60 mt-2">Try selecting a different category</p>
-          </div>
-        )}
 
         {/* Upload Instructions */}
         <div className="mt-16 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-8 text-center">
@@ -160,7 +128,6 @@ const Gallery = () => {
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-lg">
               <h3 className="text-white text-xl font-medium mb-2">{selectedImage.title}</h3>
-              <Badge variant="secondary">{selectedImage.category}</Badge>
             </div>
           </div>
         </div>
