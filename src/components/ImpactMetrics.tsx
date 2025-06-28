@@ -25,11 +25,11 @@ const ImpactMetrics = () => {
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-aasira-secondary/20 rounded-full filter blur-[100px]"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center max-w-4xl mx-auto">
           {metrics.map((metric, index) => (
             <div 
               key={index}
-              className="glass-card text-center transition-transform hover:-translate-y-2"
+              className="glass-card text-center transition-transform hover:-translate-y-2 w-full max-w-sm"
             >
               <div className="text-4xl md:text-5xl font-bold gradient-text mb-3 animate-pulse-gentle">
                 {metric.number}

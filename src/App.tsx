@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Blogs from "./pages/Blogs";
 import Events from "./pages/Events";
+import EventDetail from "./pages/EventDetail";
 import Courses from "./pages/Courses";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
@@ -35,6 +36,7 @@ const App = () => {
                   <Route path="/about" element={<About />} />
                   <Route path="/blogs" element={<Blogs />} />
                   <Route path="/events" element={<Events />} />
+                  <Route path="/events/:id" element={<EventDetail />} />
                   <Route path="/courses" element={<Courses />} />
                   <Route path="/gallery" element={<Gallery />} />
                   <Route path="/contact" element={<Contact />} />

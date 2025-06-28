@@ -1,14 +1,13 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, Clock, BarChart, Clock3, Users, BookOpen, Search } from "lucide-react";
+import { Loader2, Clock, BarChart, Users, Search, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import SectionHeading from "@/components/SectionHeading";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 
 const fetchCourses = async () => {
   const { data, error } = await supabase
@@ -25,6 +24,81 @@ const fetchCourses = async () => {
 };
 
 const CourseCard = ({ course }: { course: any }) => {
+  const [isEnrolling, setIsEnrolling] = useState(false);
+  const { toast } = useToast();
+
+  const handleEnrollment = async () => {
+    try {
+      setIsEnrolling(true);
+      
+      // Check if user is authenticated
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Authentication Required",
+          description: "Please log in to enroll in courses.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Check if already enrolled
+      const { data: existingEnrollment } = await supabase
+        .from("course_enrollments")
+        .select("id")
+        .eq("course_id", course.id)
+        .eq("user_id", user.id)
+        .single();
+
+      if (existingEnrollment) {
+        toast({
+          title: "Already Enrolled",
+          description: "You are already enrolled in this course.",
+          variant: "default",
+        });
+        return;
+      }
+
+      // Create enrollment record
+      const { error } = await supabase
+        .from("course_enrollments")
+        .insert({
+          course_id: course.id,
+          user_id: user.id,
+          payment_status: course.price > 0 ? "pending" : "completed"
+        });
+
+      if (error) throw error;
+
+      if (course.price > 0) {
+        toast({
+          title: "Enrollment Started",
+          description: "Please complete payment to finalize enrollment.",
+          variant: "default",
+        });
+        // Here you would integrate with your payment system
+        // For now, we'll just show a message
+      } else {
+        toast({
+          title: "Enrollment Successful",
+          description: "You have been enrolled in the course!",
+          variant: "default",
+        });
+      }
+
+    } catch (error) {
+      console.error("Enrollment error:", error);
+      toast({
+        title: "Enrollment Failed",
+        description: "There was an error enrolling in the course. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsEnrolling(false);
+    }
+  };
+
   return (
     <Card className="glass-card h-full flex flex-col">
       <div className="relative overflow-hidden rounded-t-lg">
@@ -36,6 +110,11 @@ const CourseCard = ({ course }: { course: any }) => {
         <Badge className="absolute top-2 left-2">
           {course.level}
         </Badge>
+        {course.price === 0 && (
+          <Badge className="absolute top-2 right-2 bg-green-600 hover:bg-green-700">
+            Free
+          </Badge>
+        )}
       </div>
       
       <CardHeader className="pb-2">
@@ -63,11 +142,27 @@ const CourseCard = ({ course }: { course: any }) => {
       
       <CardFooter className="flex justify-between items-center border-t border-white/10 pt-4">
         <div className="text-lg font-bold text-white">
-          ₹{course.price}
+          {course.price > 0 ? `₹${course.price}` : "Free"}
         </div>
         
-        <Button variant="default" size="sm" className="bg-aasira-accent hover:bg-aasira-accent/90">
-          Enroll Now
+        <Button 
+          variant="default" 
+          size="sm" 
+          className="bg-aasira-accent hover:bg-aasira-accent/90"
+          onClick={handleEnrollment}
+          disabled={isEnrolling}
+        >
+          {isEnrolling ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Enrolling...
+            </>
+          ) : (
+            <>
+              <CheckCircle className="w-4 h-4 mr-2" />
+              Enroll Now
+            </>
+          )}
         </Button>
       </CardFooter>
     </Card>
