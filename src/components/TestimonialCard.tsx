@@ -19,13 +19,6 @@ const TestimonialCard = ({ content, name, title, avatar }: TestimonialCardProps)
       </p>
       
       <div className="flex items-center mt-auto">
-        <div className="flex-shrink-0 mr-4">
-          <img
-            src={avatar}
-            alt={name}
-            className="w-12 h-12 rounded-full object-cover border-2 border-aasira-accent/30"
-          />
-        </div>
         <div>
           <h4 className="font-semibold text-white">{name}</h4>
           <p className="text-sm text-aasira-accent">{title}</p>
