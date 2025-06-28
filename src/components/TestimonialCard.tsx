@@ -3,7 +3,6 @@ interface TestimonialCardProps {
   content: string;
   name: string;
   title: string;
-  avatar: string;
 }
 
 const TestimonialCard = ({ content, name, title, avatar }: TestimonialCardProps) => {
