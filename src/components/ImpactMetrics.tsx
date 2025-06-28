@@ -12,7 +12,7 @@ const metrics = [
   },
   {
     number: "5",
-    label: "Corporate Partners",
+    label: "Partners",
     description: "Supporting our mission and initiatives"
   }
 ];
