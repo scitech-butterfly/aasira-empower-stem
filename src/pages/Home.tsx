@@ -50,7 +50,7 @@ const testimonials = [
     title: "Student at GoodWorks Trust"
   },
   {
-    content: "A great initiative by the team to reform the lives of the kids. Congratulations for the effort to bring the change in the society. We really appreciate you for doing  selfless service of imparting computer and AI classes to the children of GoodWorks Trust. Keep doing GoodWorks."
+    content: "A great initiative by the team to reform the lives of the kids. Congratulations for the effort to bring the change in the society. We really appreciate you for doing  selfless service of imparting computer and AI classes to the children of GoodWorks Trust. Keep doing GoodWorks.",
     name: "Ms. Smriti Mishra",
     title: "Co-Founder, GoodWorks Trust"
   }
