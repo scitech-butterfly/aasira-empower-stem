@@ -102,7 +102,7 @@ const Blogs = () => {
     queryFn: fetchBlogStats
   });
 
-  // Debug logging
+  /* Debug logging
   useEffect(() => {
     console.log("🐛 Debug Info:");
     console.log("- Categories:", categories);
@@ -117,7 +117,7 @@ const Blogs = () => {
       blogPostsTagsError,
       blogStatsError
     });
-  }, [categories, tags, blogs, blogPostsTags, blogStats, categoriesError, tagsError, blogsError, blogPostsTagsError, blogStatsError]);
+  }, [categories, tags, blogs, blogPostsTags, blogStats, categoriesError, tagsError, blogsError, blogPostsTagsError, blogStatsError]); */
 
   // Create a map of blog IDs to their tags
   const blogTagsMap = blogPostsTags.reduce((acc: Record<string, any[]>, item) => {
