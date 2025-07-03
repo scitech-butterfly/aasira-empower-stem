@@ -102,23 +102,6 @@ const Blogs = () => {
     queryFn: fetchBlogStats
   });
 
-  /* Debug logging
-  useEffect(() => {
-    console.log("🐛 Debug Info:");
-    console.log("- Categories:", categories);
-    console.log("- Tags:", tags);
-    console.log("- Blogs:", blogs);
-    console.log("- Blog Posts Tags:", blogPostsTags);
-    console.log("- Blog Stats:", blogStats);
-    console.log("- Errors:", {
-      categoriesError,
-      tagsError,
-      blogsError,
-      blogPostsTagsError,
-      blogStatsError
-    });
-  }, [categories, tags, blogs, blogPostsTags, blogStats, categoriesError, tagsError, blogsError, blogPostsTagsError, blogStatsError]); */
-
   // Create a map of blog IDs to their tags
   const blogTagsMap = blogPostsTags.reduce((acc: Record<string, any[]>, item) => {
     if (!acc[item.blog_id]) {
@@ -179,24 +162,6 @@ const Blogs = () => {
           description="Explore articles on STEM education, career development, diversity, and innovation."
           centered={true}
         />
-
-        {/* Debug Info Panel - Remove this in production */}
-        <div className="mb-8 p-4 bg-black/20 rounded text-white text-sm">
-          <h4 className="font-bold mb-2">Debug Info:</h4>
-          <p>Total blogs fetched: {blogs.length}</p>
-          <p>Filtered blogs: {filteredBlogs.length}</p>
-          <p>Selected category: {selectedCategory || "None"}</p>
-          <p>Selected tag: {selectedTag || "None"}</p>
-          <p>Search query: "{searchQuery}"</p>
-          {blogs.length > 0 && (
-            <details className="mt-2">
-              <summary className="cursor-pointer">View first blog data</summary>
-              <pre className="mt-2 text-xs overflow-auto">
-                {JSON.stringify(blogs[0], null, 2)}
-              </pre>
-            </details>
-          )}
-        </div>
 
         {/* Search and Filter */}
         <div className="mb-8 mt-10 flex flex-col md:flex-row gap-4">
