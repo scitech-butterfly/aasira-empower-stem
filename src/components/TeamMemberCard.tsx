@@ -14,7 +14,7 @@ const TeamMemberCard = ({ name, role, image, bio, linkedin }: TeamMemberCardProp
         <img
           src={image}
           alt={name}
-          className="w-full h-64 object-cover transition-transform group-hover:scale-105"
+          className="w-full h-80 object-cover object-center transition-transform group-hover:scale-105"
         />
       </div>
       <h3 className="text-xl font-semibold text-white mb-2">{name}</h3>

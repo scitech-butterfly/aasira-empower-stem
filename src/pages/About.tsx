@@ -25,36 +25,42 @@ const coreTeam = [
   {
     name: "Gauri Singh",
     role: "Educational Outreach Training Lead",
+    bio: "Passionate about empowering women in STEM through education and mentorship.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287789/IMG_6463_ip8jbh.jpg",
     linkedin: "https://www.linkedin.com/in/gauri-singh-754787285/"
   },
   {
     name: "Khushi Kashyap",
     role: "Educational Outreach Trainer",
+    bio: "Dedicated to creating inclusive learning environments for underrepresented groups in technology.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1749287649/IMG-20250412-WA0199_sm6qzu.jpg",
     linkedin: "https://www.linkedin.com/in/khushikashyap8605/"
   },
   {
     name: "Manjari Pandey",
     role: "Content Strategist",
+    bio: "Creating compelling content that inspires and educates the next generation of women in STEM.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750691782/manjari_iuulyt.jpg",
     linkedin: "https://linkedin.com"
   },
   {
     name: "Tamanna Atreya",
     role: "Content Strategist",
+    bio: "Developing strategic content initiatives to promote diversity and inclusion in STEM fields.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750691774/tamanna_wxqgox.jpg",
     linkedin: "https://www.linkedin.com/in/tamanna-mamlakatoi-atreya-390751277/"
   },
   {
     name: "Manya Bhargava",
     role: "Educational Trainer and Content Creator",
+    bio: "Combining education and creativity to make STEM accessible and engaging for everyone.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750692242/manya_pnjiwi.jpg",
     linkedin: "https://www.linkedin.com/in/ananya-poundrik-95b40a2aa/"
   },
   {
     name: "Ananya Poundrik",
     role: "Educational Trainer and Content Creator",
+    bio: "Passionate about breaking barriers and creating opportunities for women in technology.",
     image: "https://res.cloudinary.com/dc4kbtlip/image/upload/v1750691774/ananya_cnzvqw.jpg",
     linkedin: "https://www.linkedin.com/in/manya-bhargava-692407280/"
   }
@@ -138,7 +144,7 @@ const About = () => {
               Aasira is a movement dedicated to cementing a better future for all genders in STEM fields. Founded in 2023, we fight for equal recognition of women everywhere- from schools to workplaces. We strive to hold our leaders accountable and to educate and empower others to take action.
             </p>
             <p className="text-white/80 mb-4">
-              As much as it is a people empowerment movement, it is equally an education movement. We work to ensure that our voices are heard for generations to come. But we can’t do it without your help. Get in touch to see how you can get involved and increase our impact.
+              As much as it is a people empowerment movement, it is equally an education movement. We work to ensure that our voices are heard for generations to come. But we can't do it without your help. Get in touch to see how you can get involved and increase our impact.
             </p>
           </div>
         </div>
@@ -161,7 +167,6 @@ const About = () => {
                 <TeamMemberCard 
                   key={index} 
                   {...founder} 
-                  size="large"
                 />
               ))}
             </div>
