@@ -131,8 +131,8 @@ const Home = () => {
             <div className="relative">
               <div className="rounded-xl overflow-hidden border-4 border-aasira-accent/20 shadow-lg relative z-10">
                 <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
-                  alt="Women in STEM" 
+                  src="https://vuygwpfhzvwkczuzpzga.supabase.co/storage/v1/object/public/gallery//WhatsApp%20Image%202023-06-30%20at%202.37.08%20PM.jpg" 
+                  alt="Empowering Students in STEM" 
                   className="w-full h-auto"
                 />
               </div>
