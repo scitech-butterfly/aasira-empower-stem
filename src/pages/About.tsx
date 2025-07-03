@@ -117,7 +117,7 @@ const About = () => {
             <div className="relative">
               <div className="rounded-xl overflow-hidden shadow-lg relative z-10">
                 <img 
-                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" 
+                  src="https://vuygwpfhzvwkczuzpzga.supabase.co/storage/v1/object/public/gallery//WhatsApp%20Image%202023-11-10%20at%2015.56.25_28e8480a.jpg" 
                   alt="Women in STEM collaboration" 
                   className="w-full h-auto"
                 />
