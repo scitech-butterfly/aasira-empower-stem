@@ -82,41 +82,6 @@ const Gallery = () => {
             ))}
           </div>
         )}
-
-        {/* Upload Instructions */}
-        <div className="mt-16 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">Want to Add Your Photos?</h3>
-          <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-            To add your collaboration photos to this gallery, you can upload them to your Supabase storage bucket and update the gallery data. 
-            Here's how to integrate lots of photos:
-          </p>
-          <div className="grid md:grid-cols-2 gap-6 text-left max-w-4xl mx-auto">
-            <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-aasira-accent mb-2">1. Supabase Storage</h4>
-              <p className="text-white/70 text-sm">
-                Create a storage bucket in Supabase, upload your images, and get their public URLs to add to the gallery_images table.
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-aasira-accent mb-2">2. Database Integration</h4>
-              <p className="text-white/70 text-sm">
-                Add image URLs to the 'gallery_images' table in your database to dynamically display photos in the gallery.
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-aasira-accent mb-2">3. Bulk Upload</h4>
-              <p className="text-white/70 text-sm">
-                Use Supabase's bulk upload feature or create an admin interface to easily add multiple photos at once.
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-semibold text-aasira-accent mb-2">4. Image Optimization</h4>
-              <p className="text-white/70 text-sm">
-                Consider using Supabase's image transformations to automatically resize and optimize images for better performance.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Modal for enlarged image */}
