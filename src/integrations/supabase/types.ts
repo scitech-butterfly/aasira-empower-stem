@@ -374,6 +374,21 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_images: {
+        Row: {
+          id: number
+          url: string | null
+        }
+        Insert: {
+          id?: number
+          url?: string | null
+        }
+        Update: {
+          id?: number
+          url?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null

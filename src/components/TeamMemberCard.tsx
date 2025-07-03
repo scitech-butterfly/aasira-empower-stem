@@ -1,47 +1,35 @@
 
-import { LinkedinIcon } from "lucide-react";
-
 interface TeamMemberCardProps {
   name: string;
   role: string;
-  bio: string;
   image: string;
+  bio: string;
   linkedin?: string;
-  size?: "small" | "large";
 }
 
-const TeamMemberCard = ({ 
-  name, 
-  role, 
-  bio, 
-  image, 
-  linkedin,
-  size = "small" 
-}: TeamMemberCardProps) => {
+const TeamMemberCard = ({ name, role, image, bio, linkedin }: TeamMemberCardProps) => {
   return (
-    <div className={`glass-card text-center h-full flex flex-col ${size === "large" ? "p-8" : "p-6"}`}>
-      <div className={`relative mx-auto mb-6 rounded-full overflow-hidden border-4 border-aasira-accent/20 ${size === "large" ? "w-48 h-48" : "w-32 h-32"}`}>
+    <div className="glass-card text-center group transition-transform hover:-translate-y-2">
+      <div className="relative mb-4 overflow-hidden rounded-lg">
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-cover"
+          className="w-full h-64 object-cover transition-transform group-hover:scale-105"
         />
-        {linkedin && (
-          <a
-            href={linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-0 right-0 bg-aasira-accent p-2 rounded-tl-md hover:bg-aasira-accent/80 transition-colors"
-            aria-label={`${name}'s LinkedIn`}
-          >
-            <LinkedinIcon size={16} className="text-white" />
-          </a>
-        )}
       </div>
-      
-      <h3 className={`font-bold text-white mb-1 ${size === "large" ? "text-2xl" : "text-xl"}`}>{name}</h3>
-      <p className="text-aasira-accent mb-4">{role}</p>
-      <p className="text-white/70 text-sm flex-grow">{bio}</p>
+      <h3 className="text-xl font-semibold text-white mb-2">{name}</h3>
+      <p className="text-aasira-accent font-medium mb-3">{role}</p>
+      <p className="text-white/70 text-sm mb-4">{bio}</p>
+      {linkedin && (
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center text-aasira-accent hover:text-white transition-colors"
+        >
+          Connect on LinkedIn
+        </a>
+      )}
     </div>
   );
 };

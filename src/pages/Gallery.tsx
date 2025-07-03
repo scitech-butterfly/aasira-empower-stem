@@ -1,44 +1,42 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-// Sample gallery data - you can replace these with your actual collaboration photos
-const galleryImages = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    alt: "STEM Workshop Collaboration",
-    category: "Workshops",
-    title: "Interactive STEM Learning Session"
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    alt: "Tech Mentorship Program",
-    category: "Mentorship",
-    title: "Tech Career Guidance Session"
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    alt: "Innovation Showcase",
-    category: "Events",
-    title: "Innovation and Ideas Showcase"
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    alt: "Coding Bootcamp",
-    category: "Education",
-    title: "Intensive Coding Bootcamp"
-  },
-  // Add more images as needed
-];
+interface GalleryImage {
+  id: number;
+  url: string;
+}
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('gallery_images')
+          .select('id, url')
+          .order('id', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching gallery images:', error);
+        } else {
+          setGalleryImages(data || []);
+        }
+      } catch (error) {
+        console.error('Error fetching gallery images:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGalleryImages();
+  }, []);
 
   return (
     <div className="min-h-screen bg-aasira-primary">
@@ -50,28 +48,40 @@ const Gallery = () => {
           centered={true}
         />
 
-        {/* Gallery Grid */}
-        <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {galleryImages.map((image) => (
-            <div
-              key={image.id}
-              className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:border-aasira-accent/50 transition-all duration-300"
-              onClick={() => setSelectedImage(image)}
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="text-white font-medium text-sm mb-1">{image.title}</h3>
+        {loading ? (
+          <div className="text-center py-16">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-aasira-accent mx-auto"></div>
+            <p className="text-white/70 mt-4">Loading gallery...</p>
+          </div>
+        ) : galleryImages.length === 0 ? (
+          <div className="text-center py-16">
+            <h3 className="text-xl font-medium text-white">No images found</h3>
+            <p className="text-white/60 mt-2">Upload some images to get started</p>
+          </div>
+        ) : (
+          /* Gallery Grid */
+          <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+            {galleryImages.map((image) => (
+              <div
+                key={image.id}
+                className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:border-aasira-accent/50 transition-all duration-300"
+                onClick={() => setSelectedImage(image)}
+              >
+                <img
+                  src={image.url}
+                  alt={`Gallery image ${image.id}`}
+                  className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="text-white font-medium text-sm mb-1">Gallery Image</h3>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Upload Instructions */}
         <div className="mt-16 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-8 text-center">
@@ -84,19 +94,19 @@ const Gallery = () => {
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-aasira-accent mb-2">1. Supabase Storage</h4>
               <p className="text-white/70 text-sm">
-                Create a storage bucket in Supabase, upload your images, and get their public URLs to replace the sample images in the gallery data.
+                Create a storage bucket in Supabase, upload your images, and get their public URLs to add to the gallery_images table.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-aasira-accent mb-2">2. Database Integration</h4>
               <p className="text-white/70 text-sm">
-                Create a 'gallery_images' table in your database to dynamically manage photos with categories, titles, and descriptions.
+                Add image URLs to the 'gallery_images' table in your database to dynamically display photos in the gallery.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-aasira-accent mb-2">3. Bulk Upload</h4>
               <p className="text-white/70 text-sm">
-                Use Supabase's bulk upload feature or create an admin interface to easily add multiple photos at once with proper categorization.
+                Use Supabase's bulk upload feature or create an admin interface to easily add multiple photos at once.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-4">
@@ -122,12 +132,12 @@ const Gallery = () => {
               <X className="h-6 w-6" />
             </Button>
             <img
-              src={selectedImage.src}
-              alt={selectedImage.alt}
+              src={selectedImage.url}
+              alt={`Gallery image ${selectedImage.id}`}
               className="max-w-full max-h-[90vh] object-contain rounded-lg"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-lg">
-              <h3 className="text-white text-xl font-medium mb-2">{selectedImage.title}</h3>
+              <h3 className="text-white text-xl font-medium mb-2">Gallery Image</h3>
             </div>
           </div>
         </div>
