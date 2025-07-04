@@ -44,9 +44,9 @@ const Events = () => {
     // Filter by event type
     const matchesType = eventType === "all" || event.type === eventType;
     
-    // Filter by past/upcoming
-    const eventDate = new Date(event.date);
-    const isPast = eventDate < currentDate;
+    // Filter by past/upcoming - use end_date if available, otherwise use date
+    const eventEndDate = new Date(event.end_date || event.date);
+    const isPast = eventEndDate < currentDate;
     const matchesPastFilter = showPastEvents || !isPast;
     
     return matchesSearch && matchesType && matchesPastFilter;
@@ -126,8 +126,9 @@ const Events = () => {
         {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEvents.map((event: any) => {
-            const eventDate = new Date(event.date);
-            const isPast = eventDate < currentDate;
+            // Use end_date if available, otherwise use date for past check
+            const eventEndDate = new Date(event.end_date || event.date);
+            const isPast = eventEndDate < currentDate;
             
             return (
               <EventCard
@@ -135,7 +136,8 @@ const Events = () => {
                 id={event.id}
                 title={event.title}
                 description={event.description}
-                date={eventDate.toLocaleDateString()}
+                date={event.date}
+                endDate={event.end_date}
                 time={event.time}
                 location={event.location}
                 image={event.image || "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"}

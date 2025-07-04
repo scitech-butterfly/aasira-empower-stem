@@ -196,7 +196,8 @@ const Home = () => {
                 id={event.id}
                 title={event.title}
                 description={event.description}
-                date={new Date(event.date).toLocaleDateString()}
+                date={event.date}
+                endDate={event.end_date}
                 time={event.time}
                 location={event.location}
                 image={event.image || "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"}

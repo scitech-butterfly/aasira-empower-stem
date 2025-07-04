@@ -9,6 +9,7 @@ interface EventCardProps {
   title: string;
   description: string;
   date: string;
+  endDate?: string;
   time: string;
   location: string;
   image: string;
@@ -22,6 +23,7 @@ const EventCard = ({
   title,
   description,
   date,
+  endDate,
   time,
   location,
   image,
@@ -29,6 +31,17 @@ const EventCard = ({
   rsvpLink,
   isPast = false,
 }: EventCardProps) => {
+  const formatDateRange = (startDate: string, endDate?: string) => {
+    const start = new Date(startDate);
+    const end = endDate ? new Date(endDate) : null;
+    
+    if (!end || start.toDateString() === end.toDateString()) {
+      return start.toLocaleDateString();
+    }
+    
+    return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
+  };
+
   return (
     <div className="glass-card group h-full flex flex-col">
       <div className="relative overflow-hidden rounded-lg mb-4">
@@ -61,7 +74,7 @@ const EventCard = ({
         <div className="space-y-2 mb-4 text-sm text-white/80">
           <div className="flex items-start">
             <Calendar size={16} className="mr-2 mt-0.5 text-aasira-accent" />
-            <span>{date}</span>
+            <span>{formatDateRange(date, endDate)}</span>
           </div>
           <div className="flex items-start">
             <Clock size={16} className="mr-2 mt-0.5 text-aasira-accent" />
