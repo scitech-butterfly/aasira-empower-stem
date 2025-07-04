@@ -77,9 +77,6 @@ const Home = () => {
               Debugging Tech's Diversity Problem
             </div>
             <div className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white">
-              Empowering Women in STEM
-            </div>
-            <div className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white">
               Breaking Barriers, Building Futures
             </div>
           </div>
