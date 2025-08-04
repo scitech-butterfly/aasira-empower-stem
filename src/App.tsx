@@ -10,6 +10,7 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Blogs from "./pages/Blogs";
+import BlogDetail from "./pages/BlogDetail";
 import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import Courses from "./pages/Courses";
@@ -35,6 +36,7 @@ const App = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/blogs" element={<Blogs />} />
+                  <Route path="/blogs/:id" element={<BlogDetail />} />
                   <Route path="/events" element={<Events />} />
                   <Route path="/events/:id" element={<EventDetail />} />
                   <Route path="/courses" element={<Courses />} />

@@ -230,7 +230,12 @@ const Home = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} {...testimonial} />
+              <TestimonialCard 
+                key={index} 
+                content={testimonial.content}
+                name={testimonial.name}
+                role={testimonial.title}
+              />
             ))}
           </div>
         </div>
