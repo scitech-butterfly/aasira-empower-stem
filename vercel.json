@@ -1,4 +1,20 @@
 {
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aasira.site"
+        }
+      ],
+      "destination": "https://aasira.site",
+      "permanent": true
+    }
+  ]
+}
+
+{
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]
