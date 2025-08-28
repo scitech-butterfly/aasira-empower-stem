@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://aasira.site/sitemap.xml
+Sitemap: https://www.aasira.site/sitemap.xml
