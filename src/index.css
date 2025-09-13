@@ -33,14 +33,30 @@
     @apply border-border;
   }
   body {
-    @apply bg-aasira-primary text-foreground;
+    background: linear-gradient(135deg, #1A0D3E 0%, #2D1B69 25%, #4C1D95 50%, #6B46C1 75%, #8B5CF6 100%);
+    background-attachment: fixed;
+    @apply text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    min-height: 100vh;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-aasira-secondary/10 backdrop-blur-sm border border-aasira-secondary/20 rounded-lg p-6 shadow-lg;
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-6 shadow-xl;
+    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  }
+  
+  .gradient-bg-pink {
+    background: linear-gradient(135deg, #2D1B69 0%, #7C3AED 30%, #E879F9 70%, #F0ABFC 100%);
+  }
+  
+  .gradient-bg-blue {
+    background: linear-gradient(135deg, #1A0D3E 0%, #4338CA 30%, #60A5FA 70%, #93C5FD 100%);
+  }
+  
+  .gradient-bg-lavender {
+    background: linear-gradient(135deg, #2D1B69 0%, #8B5CF6 30%, #C084FC 70%, #F3E8FF 100%);
   }
 }
 
