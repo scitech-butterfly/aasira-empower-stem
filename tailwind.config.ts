@@ -58,13 +58,24 @@ export default {
 					foreground: "hsl(var(--card-foreground))"
 				},
 				aasira: {
-					primary: "#0F0529",
+					primary: "#1A0D3E",
 					secondary: {
-						DEFAULT: "#4A2574",
-						light: "#7338A0",
-						lighter: "#924DBF"
+						DEFAULT: "#6B46C1",
+						light: "#8B5CF6",
+						lighter: "#A78BFA"
 					},
-					accent: "#9E72C3"
+					accent: "#C084FC",
+					pink: {
+						DEFAULT: "#E879F9",
+						light: "#F0ABFC",
+						lighter: "#F8D7FE"
+					},
+					blue: {
+						DEFAULT: "#60A5FA",
+						light: "#93C5FD",
+						lighter: "#DBEAFE"
+					},
+					glow: "#F3E8FF"
 				}
 			},
 			borderRadius: {
