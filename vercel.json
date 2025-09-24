@@ -1,9 +1,8 @@
 {
   "redirects": [
-    { "source": "https://aasira.site/:path*", "destination": "https://www.aasira.site/:path*", "permanent": true }
+    { "source": "/:path*", "destination": "https://www.aasira.site/:path*", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]
 }
-
