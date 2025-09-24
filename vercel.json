@@ -1,0 +1,9 @@
+{
+
+"redirects": [
+
+{ "source": "/:path*", "destination": "https://www.aasira.site/:path*", "permanent": true }
+
+]
+
+}
