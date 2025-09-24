@@ -110,9 +110,6 @@ const Navbar = () => {
                   <DropdownMenuItem>
                     <Link to="/profile" className="w-full">Profile</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link to="/dashboard" className="w-full">Dashboard</Link>
-                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
                     Sign Out

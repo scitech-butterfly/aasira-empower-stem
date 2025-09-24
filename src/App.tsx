@@ -17,6 +17,7 @@ import Courses from "./pages/Courses";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 // Create a new QueryClient instance
@@ -43,6 +44,7 @@ const App = () => {
                   <Route path="/gallery" element={<Gallery />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/auth" element={<Auth />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>
