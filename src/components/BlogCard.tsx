@@ -1,9 +1,12 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Heart, MessageSquare, User, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface BlogCardProps {
   id: string;
@@ -32,16 +35,64 @@ const BlogCard = ({
 }: BlogCardProps) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
+  const { user } = useAuth();
+  const { toast } = useToast();
 
-  const handleLike = (e: React.MouseEvent) => {
+  useEffect(() => {
+    if (user) {
+      checkIfLiked();
+    }
+  }, [user, id]);
+
+  const checkIfLiked = async () => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from('blog_likes')
+      .select('id')
+      .eq('blog_id', id)
+      .eq('user_id', user.id)
+      .single();
+    
+    setLiked(!!data);
+  };
+
+  const handleLike = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (liked) {
-      setLikeCount(likeCount - 1);
-    } else {
-      setLikeCount(likeCount + 1);
+    
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to like posts",
+        variant: "destructive"
+      });
+      return;
     }
-    setLiked(!liked);
+
+    if (liked) {
+      // Remove like
+      const { error } = await supabase
+        .from('blog_likes')
+        .delete()
+        .eq('blog_id', id)
+        .eq('user_id', user.id);
+      
+      if (!error) {
+        setLiked(false);
+        setLikeCount(likeCount - 1);
+      }
+    } else {
+      // Add like
+      const { error } = await supabase
+        .from('blog_likes')
+        .insert({ blog_id: id, user_id: user.id });
+      
+      if (!error) {
+        setLiked(true);
+        setLikeCount(likeCount + 1);
+      }
+    }
   };
 
   return (
